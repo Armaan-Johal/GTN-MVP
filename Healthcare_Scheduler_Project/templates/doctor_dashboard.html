@@ -1,0 +1,146 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}">GTN</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="{{ url_for('doc_signup3') }}">Calendar Availability</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Welcome, Dr. {{ name }}</h1><br>
+          <h3 class="sub-header">Upcoming Consultations</h3>
+          <table id="data" class="table table-striped">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>LP Name</th>
+                <th>Description</th>
+                <th>Email</th>
+                <th>Zoom Link</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in range(0, '0' if tupleList==None else tupleList|length) %}
+                <tr>
+                  <td>{{ tupleList[x][1] }}</td>
+                  <td>{{ tupleList[x][0].lname }}, {{ tupleList[x][0].fname }}</td>
+                  <td>{{ tupleList[x][2] }}</td>
+                  <td>{{ tupleList[x][0].email }}</td>
+                  <td>{{ tupleList[x][3] }}</td>
+                  {{ form.hidden_tag() }}
+                  <td>
+                  {% if tupleList[x][5] == False %}
+                    <form action="/doctor_dashboard" method="POST" enctype="multipart/form-data">
+                      <input class="btn btn-danger" name="action" type="hidden" value="{{ tupleList[x][4].id }}">
+                      <button class="btn btn-danger" name="action" value="{{ tupleList[x][4].id }}" type="submit">Accept Appointment</button>
+                    </form>
+                  {% else %}
+                    <button class="btn btn-success" disabled type="button">Accepted</button>
+                  {% endif %}
+                  </td>
+                  <td>
+                    <form action="/doctor_dashboard" method="POST" enctype="multipart/form-data">
+                      <input name="action" type="hidden" value="EMR">
+                      <button class="btn btn-info" name="action" value="EMR" type="submit">Access Patient EMR</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table><br><br><br><br>
+
+          <h3 class="sub-header">Previous Consultations</h3>
+          <table id="data" class="table table-striped">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>LP Name</th>
+                <th>Description</th>
+                <th>Email</th>
+                <th>Zoom Link</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in range(0, '0' if tupleListPrev==None else tupleListPrev|length) %}
+                <tr>
+                  <td>{{ tupleListPrev[x][1] }}</td>
+                  <td>{{ tupleListPrev[x][0].lname }}, {{ tupleListPrev[x][0].fname }}</td>
+                  <td>{{ tupleListPrev[x][2] }}</td>
+                  <td>{{ tupleListPrev[x][0].email }}</td>
+                  <td>{{ tupleListPrev[x][3] }}</td>
+                  <td>
+                    <form action="/" method="POST" enctype="multipart/form-data">
+                      <input id="doc_id" name="doc_id" type="hidden" value="{{ tupleListPrev[x][0].id }}">
+                      <button class="btn btn-info" name="action" value="{{ tupleListPrev[x][0].id }}" type="button">Access Patient EMR</button>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table><br><br><br><br>
+
+          <h3 class="sub-header">Recent News in {{ current_user.specialty }}</h3>
+          <table id="data" class="table table-striped">
+            <thead>
+              <tr>
+                <!-- <th></th> -->
+                <th>Title</th>
+                <th>Source</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for n in news %}
+                <tr>
+                  <!-- <td style="width: 150px;"><img style="max-width: 50%; height: auto;" src="{{ n['img'] }}" ></td> -->
+                  <td>{{ n['title'] }}</td>
+                  <td>{{ n['media'] }}</td>
+                  <td>{{ n['date'] }}</td>
+                  <td>{{ n['desc'] }}</td>
+                  <td>
+                    <a class="btn btn-info" href="{{ n['link'] }}" target="_blank">Read More</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Doctor Sign Up
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <form class="form-inline" method="POST" action="/doc_signup3" enctype="multipart/form-data">
+    <h2 class="form-signin-heading">Select Availability Times</h2><br>
+    {{ form.hidden_tag() }}
+    <div class="side-by-side">
+        <label class="control-label">Repeat every</label><br>
+        {{ wtf.form_field(form.repeat) }}
+    </div><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&nbsp;&nbsp;Monday&nbsp;&nbsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.mon_start) }}&emsp;
+        {{ wtf.form_field(form.mon_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&nbsp;&nbsp;Tuesday&nbsp;&nbsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.tue_start) }}&emsp;
+        {{ wtf.form_field(form.tue_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">Wednesday</button>&emsp;
+        {{ wtf.form_field(form.wed_start) }}&emsp;
+        {{ wtf.form_field(form.wed_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&nbsp;&nbsp;Thursday&nbsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.thu_start) }}&emsp;
+        {{ wtf.form_field(form.thu_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&emsp;&nbsp;Friday&emsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.fri_start) }}&emsp;
+        {{ wtf.form_field(form.fri_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&nbsp;&nbsp;Saturday&nbsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.sat_start) }}&emsp;
+        {{ wtf.form_field(form.sat_end) }}
+    </div><br><br>
+    <div class="side-by-side">
+        <button class="btn btn-lg btn-primary" disabled type="button">&nbsp;&nbsp;&nbsp;Sunday&nbsp;&nbsp;&nbsp;</button>&emsp;
+        {{ wtf.form_field(form.sun_start) }}&emsp;
+        {{ wtf.form_field(form.sun_end) }}
+    </div><br><br>
+    <div class="text-center">
+        <button class="btn btn-lg btn-primary" name="action" value="save" type="submit">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
+    </div>
+  </form>
+
+</div> <!-- /container -->
+{% endblock %}
+
+
+<!--     <label class="control-label" for="communities">Choose a Community</label><SELECT name="community">
+    {% for c in commList %}
+    	<OPTION value={{c}}>{{c}}</OPTION>
+    {% endfor %}
+	</SELECT>
+	<br>
+	<br> -->

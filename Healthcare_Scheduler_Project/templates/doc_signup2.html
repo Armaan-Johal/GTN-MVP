@@ -1,0 +1,36 @@
+<!-- {% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Doctor Sign Up
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <form class="form-signin" method="POST" action="/doc_signup2" enctype="multipart/form-data">
+    <h2 class="form-signin-heading">Wrong Page</h2>
+    {{ form.hidden_tag() }}
+    {{ wtf.form_field(form.comm1) }}
+    {{ wtf.form_field(form.comm2) }}
+    {{ wtf.form_field(form.comm3) }}
+    {{ wtf.form_field(form.added_community) }} <button type="submit" name="action" value="add">Add</button><br><br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="next">Next</button>
+  </form>
+
+</div> 
+{% endblock %} -->
+
+
+<!--     <label class="control-label" for="communities">Choose a Community</label><SELECT name="community">
+    {% for c in commList %}
+    	<OPTION value={{c}}>{{c}}</OPTION>
+    {% endfor %}
+	</SELECT>
+	<br>
+	<br> -->
